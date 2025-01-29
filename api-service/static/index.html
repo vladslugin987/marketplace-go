@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">Marketplace</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">System Status</h2>
+            <div id="status" class="text-gray-700">Loading...</div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Products</h2>
+            <div id="products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                Loading products...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // check health status of service
+        fetch('/api/health')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').textContent = 
+                    `Status: ${data.status}`;
+            });
+
+        // loading of products
+        fetch('/api/products')
+            .then(response => response.json())
+            .then(products => {
+                const productsDiv = document.getElementById('products');
+                productsDiv.innerHTML = products.map(product => `
+                    <div class="border rounded-lg p-4">
+                        <h3 class="font-semibold">${product.name}</h3>
+                        <p class="text-gray-600">${product.description}</p>
+                        <p class="text-lg font-bold mt-2">$${product.price}</p>
+                    </div>
+                `).join('');
+            });
+    </script>
+</body>
+</html>
