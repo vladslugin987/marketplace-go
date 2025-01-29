@@ -1,0 +1,27 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Environment
+.env
+.env.local
+
+# IDE
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Dependencies
+vendor/
+
+# Build
+bin/
+dist/
+
+# Docker volumes
+data/
